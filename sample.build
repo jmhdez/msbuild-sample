@@ -1,20 +1,25 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Default">
   
   <PropertyGroup>
+    <!-- Ruta hasta el fichero con la solución -->
     <Solution>$(MSBuildProjectDirectory)\src\MSBuildSample.sln</Solution>
+    <!-- Carpeta donde se compila la solución -->
     <BuildDir>$(MSBuildProjectDirectory)\build\</BuildDir>
+    <!-- Carpeta para dejar los resultados finales de la compilación -->
     <ResultsDir>$(MSBuildProjectDirectory)\results\</ResultsDir>
+    <!-- Ruta hasta el ejecutable de NuGet -->
     <NuGet>$(MSBuildProjectDirectory)\src\.nuget\NuGet.exe</NuGet>
+    <!-- Ruta hasta el ejecutable de nunit-console para ejecutar los tests -->
     <NUnit>$(MSBuildProjectDirectory)\src\packages\NUnit.Runners.2.6.2\tools\nunit-console.exe</NUnit>
+    <!-- Carpeta base donde se almacenarán los ficheros a empaquetar con NuGet -->
     <NugetPackageDir>$(BuildDir)\nuget\</NugetPackageDir>
   </PropertyGroup>  
 
-  <Target Name="Default" 
-          DependsOnTargets="
-            Clean;
-            Build;
-            RunTests;
-            CreatePackage"/>
+  <Target Name="Default" DependsOnTargets="
+          Clean;
+          Build;
+          RunTests;
+          CreatePackage"/>
     
   <Target Name="Clean">
     <RemoveDir Directories="$(BuildDir);$(ResultsDir)"/>
@@ -35,6 +40,5 @@
     <Copy SourceFiles="$(BuildDir)\App.exe" DestinationFolder="$(NugetPackageDir)\lib"/>
     <Exec Command='"$(Nuget)" Pack Package.nuspec -BasePath $(NuGetPackageDir) -OutputDirectory $(ResultsDir)'/>
   </Target>
-
 
 </Project>
