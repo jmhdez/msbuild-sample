@@ -1,0 +1,40 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Default">
+  
+  <PropertyGroup>
+    <Solution>$(MSBuildProjectDirectory)\src\MSBuildSample.sln</Solution>
+    <BuildDir>$(MSBuildProjectDirectory)\build\</BuildDir>
+    <ResultsDir>$(MSBuildProjectDirectory)\results\</ResultsDir>
+    <NuGet>$(MSBuildProjectDirectory)\src\.nuget\NuGet.exe</NuGet>
+    <NUnit>$(MSBuildProjectDirectory)\src\packages\NUnit.Runners.2.6.2\tools\nunit-console.exe</NUnit>
+    <NugetPackageDir>$(BuildDir)\nuget\</NugetPackageDir>
+  </PropertyGroup>  
+
+  <Target Name="Default" 
+          DependsOnTargets="
+            Clean;
+            Build;
+            RunTests;
+            CreatePackage"/>
+    
+  <Target Name="Clean">
+    <RemoveDir Directories="$(BuildDir);$(ResultsDir)"/>
+    <MakeDir Directories="$(BuildDir);$(ResultsDir)"/>
+  </Target>
+  
+  <Target Name="Build">
+    <MSBuild Projects="$(Solution)" 
+             Targets="Rebuild" 
+             Properties="OutDir=$(BuildDir);Configuration=Release"/>
+  </Target>
+  
+  <Target Name="RunTests">
+    <Exec Command='"$(NUnit)" "$(BuildDir)\Tests.dll"' WorkingDirectory='$(ResultsDir)'/> 
+  </Target>
+  
+  <Target Name="CreatePackage">
+    <Copy SourceFiles="$(BuildDir)\App.exe" DestinationFolder="$(NugetPackageDir)\lib"/>
+    <Exec Command='"$(Nuget)" Pack Package.nuspec -BasePath $(NuGetPackageDir) -OutputDirectory $(ResultsDir)'/>
+  </Target>
+
+
+</Project>

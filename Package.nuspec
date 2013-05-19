@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Koalite.Sample.Package</id>
+    <version>1.0.0</version>
+    <authors>Juanma</authors>
+    <owners>Juanma</owners>
+    <projectUrl>http://blog.koalite.com</projectUrl>
+    <iconUrl>http://blog.koalite.com/favicon.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Sample nuget package</description>
+    <releaseNotes>This is just a sample.</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>Sample</tags>
+  </metadata>
+</package>

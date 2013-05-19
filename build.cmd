@@ -1,0 +1,1 @@
+@%WINDIR%\Microsoft.Net\Framework\v4.0.30319\msbuild sample.build
